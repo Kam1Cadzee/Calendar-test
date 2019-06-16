@@ -1,5 +1,5 @@
 import dataCalendar from "../dataCalendar";
-export const getNameMonth = date => dataCalendar.months[date.month];
+export const getNameMonth = date => dataCalendar.months[date.getMonth()];
 export const getNameDayOfWeek = date => {
   const day = getLocalDay(convertToDate(date));
   return dataCalendar.weeks[day];
@@ -7,6 +7,13 @@ export const getNameDayOfWeek = date => {
 
 export const convertToDate = ({ year, month, date }) => {
   return new Date(year, month, date);
+};
+export const getParseDate = (date = new Date()) => {
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth(),
+    date: date.getDate()
+  };
 };
 
 export const getMonth = date => {
@@ -21,7 +28,7 @@ export const getMonth = date => {
   while (date.getMonth() !== endMonth) {
     const week = [];
     for (let i = 0; i < 7; i += 1) {
-      week.push(date.getDate());
+      week.push(getParseDate(date));
       date.setDate(date.getDate() + 1);
     }
     returnMonth.push(week);

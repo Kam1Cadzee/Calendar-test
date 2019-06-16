@@ -4,7 +4,7 @@ import {
   addEvent,
   deleteEvent,
   changeEvent,
-  setCurrentDate
+  setEventDate
 } from "../../redux/Calendar/calendarActions";
 import { connect } from "react-redux";
 import { TYPE_DISPLAY } from "../../util/calendarUtil";
@@ -43,7 +43,7 @@ const mapDispatchToProps = {
   addEvent,
   deleteEvent,
   changeEvent,
-  setCurrentDate
+  setCurrentDate: setEventDate
 };
 export default connect(
   mapStateToProps,

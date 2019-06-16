@@ -12,7 +12,7 @@ const Header = ({ setDateToday, backDate, nextDate, date }) => {
       <Button onClick={setDateToday}>Сегодня</Button>
       <Button onClick={backDate}>{"<"}</Button>
       <Button onClick={nextDate}>{">"}</Button>
-      <Title text={`${getNameMonth(date)} ${date.year}`} />
+      <Title text={`${getNameMonth(date)} ${date.getFullYear()}`} />
       <SelectContainer />
     </header>
   );

@@ -5,20 +5,14 @@ import {
   CHANGE_EVENT,
   DELETE_EVENT,
   NEXT_DATE_WITH_ANY_FORMAT,
-  SET_CURRENT_DATE,
+  SET_DATE_EVENT,
   SET_CURRENT_DATE_TODAY,
-  SET_TYPE_DISPLAY
+  SET_TYPE_DISPLAY,
+  SET_CURRENT_DATE
 } from "./calendarTypes";
 import { combineReducers } from "redux";
-import { TYPE_DISPLAY } from "../../util/calendarUtil";
+import { getParseDate, TYPE_DISPLAY } from "../../util/calendarUtil";
 
-const getParseDate = (date = new Date()) => {
-  return {
-    year: date.getFullYear(),
-    month: date.getMonth(),
-    date: date.getDate()
-  };
-};
 const formatReducer = (state = TYPE_DISPLAY.MONTH, { type, payload }) => {
   switch (type) {
     case SET_TYPE_DISPLAY:
@@ -31,6 +25,7 @@ const init = {
   events: {
     qweqw: { text: "sadas", time: "12/12/12" }
   },
+  e: [{ id: 1, text: "" }],
   currentDate: new Date(),
   data: {
     dateEvent: [2019, 5, 15],
@@ -58,28 +53,41 @@ const eventsReducer = (state = new Map(), { type, payload }) => {
       return state;
   }
 };
-const currentDate = (state = getParseDate(), { type, payload }) => {
+const currentDateReducer = (state = new Date(), { type, payload }) => {
   switch (type) {
-    case SET_CURRENT_DATE:
-      return { ...state, date: payload };
-    case BACK_DATE_WITH_ANY_FORMAT:
-      return getParseDate(new Date(state.year, state.month - 1, state.date));
+    case BACK_DATE_WITH_ANY_FORMAT: {
+      const newDate = new Date(state);
+      newDate.setMonth(newDate.getMonth() - 1);
+      return newDate;
+    }
     case NEXT_DATE_WITH_ANY_FORMAT:
-      return getParseDate(new Date(state.year, state.month + 1, state.date));
+      const newDate = new Date(state);
+      newDate.setMonth(newDate.getMonth() + 1);
+      return newDate;
     case SET_CURRENT_DATE_TODAY:
-      return getParseDate();
+      return new Date();
+    case SET_CURRENT_DATE:
+      return payload;
+    default:
+      return state;
+  }
+};
+const dateEventReducer = (state = getParseDate(), { type, payload }) => {
+  switch (type) {
+    case SET_DATE_EVENT:
+      return { ...state, ...payload };
     default:
       return state;
   }
 };
 
 const dataReducer = (
-  state = new Map({ currentDate: getParseDate() }),
+  state = new Map({ eventDate: getParseDate() }),
   { type, payload }
 ) => {
   switch (type) {
     case ADD_EVENT:
-      return state.updateIn(Object.values(state.get("currentDate")), events => {
+      return state.updateIn(Object.values(state.get("eventDate")), events => {
         if (!events) {
           return new List([payload.id]);
         }
@@ -87,18 +95,15 @@ const dataReducer = (
       });
     case DELETE_EVENT:
       const index = state
-        .getIn(Object.values(payload.date))
+        .getIn(Object.values(state.get("eventDate")))
         .findIndex(id => id === payload);
-      return state.deleteIn([
-        ...Object.values(state.get("currentDate")),
-        index
-      ]);
-    case SET_CURRENT_DATE:
+      return state.deleteIn([...Object.values(state.get("eventDate")), index]);
+    case SET_DATE_EVENT:
     case BACK_DATE_WITH_ANY_FORMAT:
     case NEXT_DATE_WITH_ANY_FORMAT:
     case SET_CURRENT_DATE_TODAY:
-      return state.update("currentDate", date =>
-        currentDate(date, { type, payload })
+      return state.update("eventDate", date =>
+        dateEventReducer(date, { type, payload })
       );
     default:
       return state;
@@ -107,5 +112,6 @@ const dataReducer = (
 export default combineReducers({
   events: eventsReducer,
   dateEvents: dataReducer,
-  typeDisplay: formatReducer
+  typeDisplay: formatReducer,
+  currentDate: currentDateReducer
 });

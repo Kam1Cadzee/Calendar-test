@@ -6,20 +6,30 @@ import {
   TYPE_DISPLAY
 } from "../../util/calendarUtil";
 
-export const getCurrentDate = state => state.dateEvents.get("currentDate");
+export const getCurrentDate = state => state.currentDate;
 export const getTypeDisplay = state => state.typeDisplay;
 
+export const getEventsId = (state, props) =>
+  state.dateEvents.getIn(Object.values(props.date));
+
+export const getEventsOfDay = (state, props) => {
+  const ids = getEventsId(state, props);
+  if (ids) {
+    return ids.map(id => state.events.get(id));
+  }
+  return undefined;
+};
 export const getData = createSelector(
   [getCurrentDate, getTypeDisplay],
   (date, type) => {
-    const convertOfDate = convertToDate(date);
+    const param = new Date(date);
     switch (type) {
       case TYPE_DISPLAY.MONTH:
-        return getMonth(convertOfDate);
+        return getMonth(param);
       case TYPE_DISPLAY.WEEK:
-        return getWeek(convertOfDate);
+        return getWeek(param);
       default:
-        return getMonth(convertOfDate);
+        return getMonth(param);
     }
   }
 );

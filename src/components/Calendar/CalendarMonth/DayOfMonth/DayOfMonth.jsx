@@ -1,11 +1,30 @@
 import React from "react";
 import css from "./DayOfMonth.module.css";
+import { getEventsOfDay } from "../../../../redux/Calendar/calendarSelectors";
+import { connect } from "react-redux";
+import Event from "../../Event/Event";
 
-const DayOfMonth = ({ day, setCurrentDate }) => {
+const DayOfMonth = ({ date, setCurrentDate, deleteEvent, events = [] }) => {
+  console.log(events);
+
+  const handleClick = e => {
+    setCurrentDate(date);
+  };
   return (
-    <div className={css.day} onClick={() => setCurrentDate(day)}>
-      {day}
+    <div className={css.day} onClick={handleClick}>
+      {date.date}
+      {events.map(event => (
+        <Event
+          key={event.get("id")}
+          event={event}
+          deleteEvent={deleteEvent}
+          setCurrentDate={handleClick}
+        />
+      ))}
     </div>
   );
 };
-export default DayOfMonth;
+const mapStateToProps = (state, props) => ({
+  events: getEventsOfDay(state, props)
+});
+export default connect(mapStateToProps)(DayOfMonth);

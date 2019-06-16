@@ -2,11 +2,16 @@ import React from "react";
 import css from "./RowOfMonth.module.css";
 import DayOfMonth from "../DayOfMonth/DayOfMonth";
 
-const RowOfMonth = ({ week, setCurrentDate }) => {
+const RowOfMonth = ({ week, setCurrentDate, deleteEvent }) => {
   return (
     <>
-      {week.map((day, index) => (
-        <DayOfMonth day={day} key={index} setCurrentDate={setCurrentDate} />
+      {week.map((date, index) => (
+        <DayOfMonth
+          date={date}
+          key={index}
+          setCurrentDate={setCurrentDate}
+          deleteEvent={deleteEvent}
+        />
       ))}
     </>
   );
