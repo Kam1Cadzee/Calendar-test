@@ -51,12 +51,9 @@ const eventsReducer = (state = new Map(), { type, payload }) => {
     case ADD_EVENT:
       return state.set(payload.id, payload.event);
     case DELETE_EVENT:
-      return state.delete(payload.id);
+      return state.delete(payload);
     case CHANGE_EVENT:
-      return state.update(payload.id, value => ({
-        ...value,
-        ...payload.event
-      }));
+      return state.update(payload.id, value => value.merge(payload.event));
     default:
       return state;
   }
@@ -76,10 +73,13 @@ const currentDate = (state = getParseDate(), { type, payload }) => {
   }
 };
 
-const dataReducer = (state = new Map(), { type, payload }) => {
+const dataReducer = (
+  state = new Map({ currentDate: getParseDate() }),
+  { type, payload }
+) => {
   switch (type) {
     case ADD_EVENT:
-      return state.updateIn(Object.values(payload.date), events => {
+      return state.updateIn(Object.values(state.get("currentDate")), events => {
         if (!events) {
           return new List([payload.id]);
         }
@@ -88,15 +88,24 @@ const dataReducer = (state = new Map(), { type, payload }) => {
     case DELETE_EVENT:
       const index = state
         .getIn(Object.values(payload.date))
-        .findIndex(id => id === payload.id);
-      return state.deleteIn([...Object.values(payload.date), index]);
+        .findIndex(id => id === payload);
+      return state.deleteIn([
+        ...Object.values(state.get("currentDate")),
+        index
+      ]);
+    case SET_CURRENT_DATE:
+    case BACK_DATE_WITH_ANY_FORMAT:
+    case NEXT_DATE_WITH_ANY_FORMAT:
+    case SET_CURRENT_DATE_TODAY:
+      return state.update("currentDate", date =>
+        currentDate(date, { type, payload })
+      );
     default:
       return state;
   }
 };
 export default combineReducers({
   events: eventsReducer,
-  currentDate: currentDate,
   dateEvents: dataReducer,
   typeDisplay: formatReducer
 });

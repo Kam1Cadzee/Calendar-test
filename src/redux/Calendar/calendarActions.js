@@ -9,27 +9,27 @@ import {
   SET_TYPE_DISPLAY
 } from "./calendarTypes";
 import * as shortid from "shortid";
+import { Map } from "immutable";
 
 export const backDate = () => ({ type: BACK_DATE_WITH_ANY_FORMAT });
 export const nextDate = () => ({ type: NEXT_DATE_WITH_ANY_FORMAT });
 
-export const addEvent = (event, date) => ({
+export const addEvent = event => ({
   type: ADD_EVENT,
   payload: {
     id: shortid.generate(),
-    event,
-    date
+    event: new Map(event)
   }
 });
-export const deleteEvent = (id, date) => ({
+export const deleteEvent = id => ({
   type: DELETE_EVENT,
-  payload: { id, date }
+  payload: id
 });
 export const changeEvent = (id, event) => ({
   type: CHANGE_EVENT,
   payload: {
     id,
-    event
+    event: new Map(event)
   }
 });
 

@@ -6,7 +6,7 @@ import {
   TYPE_DISPLAY
 } from "../../util/calendarUtil";
 
-export const getCurrentDate = state => state.currentDate;
+export const getCurrentDate = state => state.dateEvents.get("currentDate");
 export const getTypeDisplay = state => state.typeDisplay;
 
 export const getData = createSelector(
