@@ -8,6 +8,9 @@ import {
 
 export const getCurrentDate = state => state.currentDate;
 export const getTypeDisplay = state => state.typeDisplay;
+export const getEventDate = state => state.dateEvents.get("eventDate");
+export const getColorEventById = (state, id) =>
+  state.events.get(id).get("color");
 
 export const getEventsId = (state, props) =>
   state.dateEvents.getIn(Object.values(props.date));

@@ -1,14 +1,16 @@
 import React from "react";
 import css from "./ContextEventModal.module.css";
+import Colors from "../../Colors/Colors";
+import { getColorEventById } from "../../../redux/Calendar/calendarSelectors";
+import { connect } from "react-redux";
 
 const ContextEventModal = ({
   deleteEvent,
-  changeColor,
-  colors,
   id,
   onClose,
+  style,
   currentColor,
-  style
+  changeEvent
 }) => {
   let backElement = React.createRef();
 
@@ -23,7 +25,9 @@ const ContextEventModal = ({
     onClose();
   };
 
-  console.log(style);
+  const handleChangeColor = color => {
+    changeEvent(id, { color });
+  };
   return (
     <div
       ref={e => (backElement = e)}
@@ -34,20 +38,12 @@ const ContextEventModal = ({
         <button type="Button" onClick={handleDeleteEvent}>
           delete
         </button>
-        <div className={css.colors}>
-          {colors.map(color => {
-            return (
-              <span
-                className={color === currentColor ? css.activeColor : css.color}
-                key={color.name}
-                style={{ backgroundColor: color.color }}
-                onClick={() => changeColor(color)}
-              />
-            );
-          })}
-        </div>
+        <Colors currentColor={currentColor} changeColor={handleChangeColor} />
       </div>
     </div>
   );
 };
-export default ContextEventModal;
+const mapStateToProps = (state, props) => ({
+  currentColor: getColorEventById(state, props.id)
+});
+export default connect(mapStateToProps)(ContextEventModal);

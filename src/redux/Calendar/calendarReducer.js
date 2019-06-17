@@ -21,25 +21,6 @@ const formatReducer = (state = TYPE_DISPLAY.MONTH, { type, payload }) => {
       return state;
   }
 };
-const init = {
-  events: {
-    qweqw: { text: "sadas", time: "12/12/12" }
-  },
-  e: [{ id: 1, text: "" }],
-  currentDate: new Date(),
-  data: {
-    dateEvent: [2019, 5, 15],
-    "2019": {
-      "5": {
-        "15": [1, 2, 3],
-        "4": [6, 9]
-      },
-      "6": {
-        "1": [12, 23]
-      }
-    }
-  }
-};
 
 const eventsReducer = (state = new Map(), { type, payload }) => {
   switch (type) {
@@ -48,21 +29,35 @@ const eventsReducer = (state = new Map(), { type, payload }) => {
     case DELETE_EVENT:
       return state.delete(payload);
     case CHANGE_EVENT:
-      return state.update(payload.id, value => value.merge(payload.event));
+      return state.update(payload.id, value => {
+        return value.merge(payload.event);
+      });
     default:
       return state;
   }
 };
+
 const currentDateReducer = (state = new Date(), { type, payload }) => {
   switch (type) {
     case BACK_DATE_WITH_ANY_FORMAT: {
       const newDate = new Date(state);
-      newDate.setMonth(newDate.getMonth() - 1);
+      if (payload === TYPE_DISPLAY.MONTH)
+        newDate.setMonth(newDate.getMonth() - 1);
+      else if (payload === TYPE_DISPLAY.WEEK)
+        newDate.setDate(newDate.getDate() - 7);
+      else if (payload === TYPE_DISPLAY.DAY)
+        newDate.setDate(newDate.getDate() - 1);
+
       return newDate;
     }
     case NEXT_DATE_WITH_ANY_FORMAT:
       const newDate = new Date(state);
-      newDate.setMonth(newDate.getMonth() + 1);
+      if (payload === TYPE_DISPLAY.MONTH)
+        newDate.setMonth(newDate.getMonth() + 1);
+      else if (payload === TYPE_DISPLAY.WEEK)
+        newDate.setDate(newDate.getDate() + 7);
+      else if (payload === TYPE_DISPLAY.DAY)
+        newDate.setDate(newDate.getDate() + 1);
       return newDate;
     case SET_CURRENT_DATE_TODAY:
       return new Date();

@@ -11,6 +11,7 @@ import { TYPE_DISPLAY } from "../../util/calendarUtil";
 import Calendar from "../Calendar/Calendar";
 import {
   getData,
+  getEventDate,
   getTypeDisplay
 } from "../../redux/Calendar/calendarSelectors";
 
@@ -36,7 +37,8 @@ class CalendarContainer extends React.Component {
 
 const mapStateToProps = state => ({
   data: getData(state),
-  typeDisplay: getTypeDisplay(state)
+  typeDisplay: getTypeDisplay(state),
+  eventDate: getEventDate(state)
 });
 const mapDispatchToProps = {
   setTypeDisplay,

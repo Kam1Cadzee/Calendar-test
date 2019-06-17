@@ -5,14 +5,14 @@ import { getNameMonth } from "../../util/calendarUtil";
 import SelectContainer from "../container/SelectContainer";
 import css from "./Header.module.css";
 
-const Header = ({ setDateToday, backDate, nextDate, date }) => {
+const Header = ({ setDateToday, backDate, nextDate, date, format }) => {
   return (
     <header className={css.header}>
       <Title text="Календар" />
       <Button onClick={setDateToday}>Сегодня</Button>
-      <Button onClick={backDate}>{"<"}</Button>
-      <Button onClick={nextDate}>{">"}</Button>
-      <Title text={`${getNameMonth(date)} ${date.getFullYear()}`} />
+      <Button onClick={() => backDate(format)}>{"<"}</Button>
+      <Button onClick={() => nextDate(format)}>{">"}</Button>
+      <Title text={`${getNameMonth(date.getMonth())} ${date.getFullYear()}`} />
       <SelectContainer />
     </header>
   );

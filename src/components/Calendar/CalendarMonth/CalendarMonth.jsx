@@ -5,7 +5,14 @@ import Toggable from "../../../util/Toggable";
 import Modal from "../../Modal/Modal";
 import AddEventModal from "../../Modal/AddEventModal/AddEventModal";
 
-const CalendarMonth = ({ data, setCurrentDate, addEvent, deleteEvent }) => {
+const CalendarMonth = ({
+  data,
+  setCurrentDate,
+  addEvent,
+  deleteEvent,
+  eventDate,
+  changeEvent
+}) => {
   return (
     <Toggable>
       {({ isToggle, toggle }) => {
@@ -18,12 +25,18 @@ const CalendarMonth = ({ data, setCurrentDate, addEvent, deleteEvent }) => {
                   key={index}
                   setCurrentDate={setCurrentDate}
                   deleteEvent={deleteEvent}
+                  changeEvent={changeEvent}
+                  eventDate={eventDate}
                 />
               ))}
             </div>
             {isToggle && (
               <Modal>
-                <AddEventModal onClose={toggle} addEvent={addEvent} />
+                <AddEventModal
+                  onClose={toggle}
+                  addEvent={addEvent}
+                  eventDate={eventDate}
+                />
               </Modal>
             )}
           </>

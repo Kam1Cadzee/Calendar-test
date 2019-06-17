@@ -1,4 +1,7 @@
-import { getCurrentDate } from "../../redux/Calendar/calendarSelectors";
+import {
+  getCurrentDate,
+  getTypeDisplay
+} from "../../redux/Calendar/calendarSelectors";
 import {
   backDate,
   nextDate,
@@ -8,7 +11,8 @@ import { connect } from "react-redux";
 import Header from "../Header/Header";
 
 const mapStateToProps = state => ({
-  date: getCurrentDate(state)
+  date: getCurrentDate(state),
+  format: getTypeDisplay(state)
 });
 
 const mapDispatchToProps = {

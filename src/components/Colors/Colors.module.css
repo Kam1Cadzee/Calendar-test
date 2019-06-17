@@ -1,0 +1,17 @@
+.color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+
+}
+.activeColor {
+    composes: color;
+    box-shadow: 0 0 4px 1px rgba(0,0,0,.8);
+}
+
+.colors {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10px;
+}

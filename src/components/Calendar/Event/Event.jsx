@@ -1,71 +1,80 @@
 import React from "react";
 import css from "./Event.module.css";
-import Toggable from "../../../util/Toggable";
 import Modal from "../../Modal/Modal";
 import ContextEventModal from "../../Modal/ContextEventModal/ContextEventModal";
+import AddEventModal from "../../Modal/AddEventModal/AddEventModal";
 
-const colors = [
-  { name: "blue", color: "blue" },
-  { name: "aqua", color: "aqua" },
-  { name: "darkviolet", color: "darkviolet" },
-  { name: "darkgreen", color: "darkgreen" }
-];
 class Event extends React.Component {
   state = {
-    colorEvent: colors[0],
-    styleContextMenu: null
-  };
-  handleChangeColor = color => {
-    this.setState({ colorEvent: color });
+    styleContextMenu: null,
+    isContextMenu: false,
+    isChangeMenu: false
   };
 
+  toggleContextMenu = () => {
+    this.setState(state => ({ isContextMenu: !state.isContextMenu }));
+  };
+  toggleChangeMenu = () => {
+    this.setState(state => ({ isChangeMenu: !state.isChangeMenu }));
+  };
+  openContextModal = e => {
+    const { setCurrentDate } = this.props;
+    e.preventDefault();
+    let { left, top, height } = e.target.getBoundingClientRect();
+    const { innerWidth, innerHeight } = window;
+    left = (left * 100) / innerWidth;
+    top = ((top + height) * 100) / innerHeight;
+    const position = {
+      left: `${left}%`,
+      top: `${top}%`
+    };
+    this.setState({ styleContextMenu: position });
+    this.toggleContextMenu();
+    setCurrentDate();
+  };
+  openChangeMenu = e => {
+    const { setCurrentDate } = this.props;
+    e.stopPropagation();
+    this.toggleChangeMenu();
+    setCurrentDate();
+  };
   render() {
-    const { event, deleteEvent, setCurrentDate } = this.props;
-    const { colorEvent, styleContextMenu } = this.state;
-    const style = { backgroundColor: colorEvent.color };
+    const { event, deleteEvent, changeEvent, eventDate } = this.props;
+    const { styleContextMenu, isContextMenu, isChangeMenu } = this.state;
+    const style = { backgroundColor: event.get("color") };
+
     return (
-      <Toggable>
-        {({ isToggle, toggle }) => {
-          const openContextModal = e => {
-            e.preventDefault();
-            let { left, top, height } = e.target.getBoundingClientRect();
-            const { innerWidth, innerHeight } = window;
-            left = (left * 100) / innerWidth;
-            top = ((top + height) * 100) / innerHeight;
-            const position = {
-              left: `${left}%`,
-              top: `${top}%`
-            };
-            this.setState({ styleContextMenu: position });
-            toggle();
-            setCurrentDate();
-          };
-          return (
-            <>
-              <div
-                className={css.event}
-                onContextMenu={openContextModal}
-                style={style}
-              >
-                {event.get("text")}
-              </div>
-              {isToggle && (
-                <Modal>
-                  <ContextEventModal
-                    colors={colors}
-                    deleteEvent={deleteEvent}
-                    id={event.get("id")}
-                    onClose={toggle}
-                    changeColor={this.handleChangeColor}
-                    currentColor={colorEvent}
-                    style={styleContextMenu}
-                  />
-                </Modal>
-              )}
-            </>
-          );
-        }}
-      </Toggable>
+      <>
+        <div
+          className={css.event}
+          onContextMenu={this.openContextModal}
+          onClick={this.openChangeMenu}
+          style={style}
+        >
+          {event.get("name")}
+        </div>
+        {isContextMenu && (
+          <Modal>
+            <ContextEventModal
+              deleteEvent={deleteEvent}
+              id={event.get("id")}
+              onClose={this.toggleContextMenu}
+              style={styleContextMenu}
+              changeEvent={changeEvent}
+            />
+          </Modal>
+        )}
+        {isChangeMenu && (
+          <Modal>
+            <AddEventModal
+              event={event}
+              eventDate={eventDate}
+              onClose={this.toggleChangeMenu}
+              changeEvent={changeEvent}
+            />
+          </Modal>
+        )}
+      </>
     );
   }
 }

@@ -6,18 +6,25 @@ import {
   NEXT_DATE_WITH_ANY_FORMAT,
   SET_DATE_EVENT,
   SET_CURRENT_DATE_TODAY,
-  SET_TYPE_DISPLAY
+  SET_TYPE_DISPLAY,
+  SET_CURRENT_DATE
 } from "./calendarTypes";
 import * as shortid from "shortid";
 import { Map } from "immutable";
 
-export const backDate = () => ({ type: BACK_DATE_WITH_ANY_FORMAT });
-export const nextDate = () => ({ type: NEXT_DATE_WITH_ANY_FORMAT });
+export const backDate = format => ({
+  type: BACK_DATE_WITH_ANY_FORMAT,
+  payload: format
+});
+export const nextDate = format => ({
+  type: NEXT_DATE_WITH_ANY_FORMAT,
+  payload: format
+});
 export const setCurrentDateToday = () => ({
   type: SET_CURRENT_DATE_TODAY
 });
 export const setCurrentDate = date => ({
-  type: SET_DATE_EVENT,
+  type: SET_CURRENT_DATE,
   payload: date
 });
 
@@ -27,7 +34,7 @@ export const addEvent = event => {
     type: ADD_EVENT,
     payload: {
       id,
-      event: new Map({ id, ...event })
+      event: new Map({ ...event, id })
     }
   };
 };

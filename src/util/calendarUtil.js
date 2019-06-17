@@ -1,8 +1,7 @@
 import dataCalendar from "../dataCalendar";
-export const getNameMonth = date => dataCalendar.months[date.getMonth()];
-export const getNameDayOfWeek = date => {
-  const day = getLocalDay(convertToDate(date));
-  return dataCalendar.weeks[day];
+export const getNameMonth = index => dataCalendar.months[index];
+export const getNameDayOfWeek = index => {
+  return dataCalendar.weeks[index];
 };
 
 export const convertToDate = ({ year, month, date }) => {
@@ -54,6 +53,19 @@ export const getLocalDay = date => {
   }
 
   return day - 1;
+};
+
+export const getTimesOfDay = (time = "00:00") => {
+  let times = [];
+  let [h, m] = time.split(":").map(t => +t);
+  for (; h < 24; h += 1) {
+    let hour = h;
+    if (h < 10) hour = `0${h}`;
+    //for (; m < 60; m += 30) times.push(`${hour}:${m === 0 ? "00" : "30"}`);
+    times.push(`${hour}:00`);
+    m = 0;
+  }
+  return times;
 };
 
 export const TYPE_DISPLAY = {

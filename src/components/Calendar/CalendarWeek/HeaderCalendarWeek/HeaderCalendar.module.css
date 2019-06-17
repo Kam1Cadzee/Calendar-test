@@ -1,0 +1,5 @@
+.header {
+    display: grid;
+    grid-template-columns: minmax(40px, 60px) repeat(7, 1fr);
+    height: 16vh;
+}

@@ -4,7 +4,14 @@ import { getEventsOfDay } from "../../../../redux/Calendar/calendarSelectors";
 import { connect } from "react-redux";
 import Event from "../../Event/Event";
 
-const DayOfMonth = ({ date, setCurrentDate, deleteEvent, events = [] }) => {
+const DayOfMonth = ({
+  date,
+  setCurrentDate,
+  deleteEvent,
+  changeEvent,
+  eventDate,
+  events = []
+}) => {
   console.log(events);
 
   const handleClick = e => {
@@ -19,6 +26,8 @@ const DayOfMonth = ({ date, setCurrentDate, deleteEvent, events = [] }) => {
           event={event}
           deleteEvent={deleteEvent}
           setCurrentDate={handleClick}
+          changeEvent={changeEvent}
+          eventDate={eventDate}
         />
       ))}
     </div>
