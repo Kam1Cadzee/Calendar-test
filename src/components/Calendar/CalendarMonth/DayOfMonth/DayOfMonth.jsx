@@ -2,16 +2,9 @@ import React from "react";
 import css from "./DayOfMonth.module.css";
 import { getEventsOfDay } from "../../../../redux/Calendar/calendarSelectors";
 import { connect } from "react-redux";
-import Event from "../../Event/Event";
+import Event from "../../../container/EventContainer";
 
-const DayOfMonth = ({
-  date,
-  setCurrentDate,
-  deleteEvent,
-  changeEvent,
-  eventDate,
-  events = []
-}) => {
+const DayOfMonth = ({ date, setCurrentDate, eventDate, events = [] }) => {
   console.log(events);
 
   const handleClick = e => {
@@ -24,15 +17,14 @@ const DayOfMonth = ({
         <Event
           key={event.get("id")}
           event={event}
-          deleteEvent={deleteEvent}
           setCurrentDate={handleClick}
-          changeEvent={changeEvent}
           eventDate={eventDate}
         />
       ))}
     </div>
   );
 };
+
 const mapStateToProps = (state, props) => ({
   events: getEventsOfDay(state, props)
 });

@@ -1,17 +1,38 @@
-import { getEventDate } from "../../../../redux/Calendar/calendarSelectors";
-import { setEventDate } from "../../../../redux/Calendar/calendarActions";
+import {
+  getEventsByTime,
+  getEventDate
+} from "../../../../redux/Calendar/calendarSelectors";
+import {
+  addEvent,
+  setEventDate
+} from "../../../../redux/Calendar/calendarActions";
 import { connect } from "react-redux";
 import DayOfWeek from "../DayOfWeek/DayOfWeek";
+import React from "react";
 
-const mapStateToProps = state => ({
-  eventDate: getEventDate(state)
+class DayOfWeekContainer extends React.Component {
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    //console.log(prevProps.events === this.props.events);
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return nextProps.events.length !== 0;
+  }
+
+  render() {
+    return <DayOfWeek {...this.props} />;
+  }
+}
+const mapStateToProps = (state, props) => ({
+  events: getEventsByTime(state, props)
 });
 
 const mapDispatchToProps = {
-  setEventDate
+  setEventDate,
+  addEvent
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DayOfWeek);
+)(DayOfWeekContainer);

@@ -40,7 +40,7 @@ export const getWeek = date => {
   date.setDate(date.getDate() - dayOfWeek);
   const week = [];
   for (let i = 0; i < 7; i += 1) {
-    week.push(date.getDate());
+    week.push(getParseDate(date));
     date.setDate(date.getDate() + 1);
   }
   return week;

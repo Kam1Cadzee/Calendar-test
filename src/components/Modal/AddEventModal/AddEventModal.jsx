@@ -9,11 +9,11 @@ class AddEventModal extends React.Component {
   constructor(props) {
     super(props);
     let event = this.props.event || new Map();
-
+    const { startTime } = this.props;
     this.state = {
       id: event.get("id") || null,
-      name: event.get("name") || null,
-      startTime: event.get("startTime") || "00:00",
+      name: event.get("name") || "",
+      startTime: event.get("startTime") || startTime || "00:00",
       endTime: event.get("endTime") || "00:00",
       description: event.get("description") || "",
       color: event.get("color") || "blue"
@@ -24,7 +24,6 @@ class AddEventModal extends React.Component {
 
   handleChange = e => {
     const { name, value } = e.target;
-    console.log(`${name} ${value}`);
     this.setState({ [name]: value });
   };
   handleChangeColor = color => this.setState({ color });

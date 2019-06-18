@@ -7,7 +7,7 @@ const RowOfWeek = ({ time, days }) => {
     <>
       <div className={css.time}>{time === "00:00" ? null : time}</div>
       {days.map(day => (
-        <DayOfWeek day={day} startTime={time} key={time + day} />
+        <DayOfWeek date={day} startTime={time} key={time + day.date} />
       ))}
     </>
   );
