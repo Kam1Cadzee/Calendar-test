@@ -1,4 +1,7 @@
-import { getEventsByTime } from "../../../../redux/Calendar/calendarSelectors";
+import {
+  getCurrentDate,
+  getEventsOfDay
+} from "../../../../redux/Calendar/calendarSelectors";
 import {
   addEvent,
   setEventDate
@@ -17,11 +20,12 @@ class DayOfWeekContainer extends React.Component {
   }
 
   render() {
-    return <Day {...this.props} />;
+    return <Day {...this.props} isShow />;
   }
 }
 const mapStateToProps = (state, props) => ({
-  events: getEventsByTime(state, props)
+  events: getEventsOfDay(state, props),
+  currentDate: getCurrentDate(state)
 });
 
 const mapDispatchToProps = {

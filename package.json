@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "classnames": "^2.2.6",
     "gh-pages": "^2.0.1",
     "immutable": "^4.0.0-rc.12",
     "prettier": "^1.18.2",
@@ -38,8 +39,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
-,
+  },
   "homepage": "https://github.com.Kam1Cadzee/Calendar-test"
 }
-

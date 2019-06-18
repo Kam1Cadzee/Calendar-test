@@ -1,0 +1,28 @@
+.dayOfWeek {
+    border-bottom: 1px solid #c7c7c7;
+}
+.day {
+    background-color: #fff;
+}
+.dayOfWeek + .dayOfWeek {
+    border-left: 1px solid #c7c7c7 ;
+}
+
+.dayInField {
+    margin: auto;
+    text-align: center;
+    font-size: 12px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: #eee;
+
+}
+.dayInFieldCurrentMonth {
+    background-color: #bbb;
+}
+.dayInFieldActive {
+    background-color: #29b6f6;
+    color: #ffffff;
+    font-weight: 700;
+
+}
