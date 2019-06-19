@@ -1,5 +1,64 @@
 .header {
     height: 10vh;
+    width: 90%;
+    margin: auto;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+
+}
+.items {
+    height: initial;
+    right: 110%;
+    left: initial;
+    overflow: hidden;
+    box-shadow: 0 0 3px 0 #00b0ff;
+
+}
+.value {
+    font-size: 24px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #00b8d4;
+}
+.value:hover {
+    color: #fff;
+    background-color: #00b8d4;
+}
+@media screen and (max-width: 680px) {
+    .header {
+        height: 20vh;
+    }
+    .title {
+        order: 1;
+        flex-basis: 50%;
+    }
+    .select {
+        order: 4;
+    }
+    .controls {
+        order: 3;
+        flex-basis: 50%;
+        flex-grow: initial;
+    }
+    .date {
+        order: 2;
+    }
+}
+@media screen and (max-width: 480px) {
+    .title {
+        display: none;
+    }
+    .controls {
+        order: 5;
+        flex-grow: 1;
+        justify-content: center;
+    }
 }

@@ -3,10 +3,8 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-auto-rows: 1fr;
-
-
     grid-gap: 1px;
-    background-color: #c7c7c7;
+    background-color: #e3f2fd;
     padding: 1px;
     margin: 0 10px;
     box-sizing: border-box;

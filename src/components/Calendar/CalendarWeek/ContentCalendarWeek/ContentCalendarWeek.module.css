@@ -1,9 +1,23 @@
 .content {
     display: grid;
-    grid-template-columns: minmax(40px, 60px) repeat(7, 1fr);
+    width: calc(100vw + 17px);
+    grid-template-columns: 60px repeat(7, 1fr);
     grid-auto-rows: 50px;
     overflow-x: hidden;
     overflow-y: auto;
     height: 74vh;
+    margin-top: 10px
+}
+@media screen and (max-width: 680px) {
+    .content {
+        height: 64vh;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .content {
+        width: 100%;
+        grid-template-columns: 30px repeat(7, 1fr);
+    }
 
 }

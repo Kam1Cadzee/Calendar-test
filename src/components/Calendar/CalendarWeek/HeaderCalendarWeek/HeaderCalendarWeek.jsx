@@ -6,8 +6,8 @@ const HeaderCalendarWeek = ({ days }) => {
   return (
     <div className={css.header}>
       <div />
-      {days.map((day, index) => (
-        <HeaderItem key={index} day={day.date} index={index} />
+      {days.map((date, index) => (
+        <HeaderItem key={index} date={date} index={index} />
       ))}
     </div>
   );

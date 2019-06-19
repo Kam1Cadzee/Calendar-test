@@ -1,0 +1,41 @@
+.select {
+    position: relative;
+}
+
+.items {
+    position: absolute;
+    width: 100px;
+    height: 200px;
+    top: 0;
+    left: 100%;
+    background-color: #fff;
+    overflow-y: scroll;
+    z-index: 1;
+    box-shadow: 0 0 6px 0px rgba(0,0,0, .3);
+    border-radius: 5px;
+    padding: 5px;
+}
+.value {
+    margin: 0;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #888888;
+}
+.value:hover {
+    transition: background-color 300ms;
+    background-color: #bbbbbb;
+    color: #fff;
+}
+.option {
+    margin: 0;
+    text-align: center;
+    padding: 10px 0;
+    color: #bbbbbb;
+    cursor: pointer;
+}
+.option:hover {
+    transition: color 200ms;
+    color: #444444;
+}

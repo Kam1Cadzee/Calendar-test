@@ -8,7 +8,7 @@ const ContentCalendarWeek = ({ days }) => {
   return (
     <div className={css.content}>
       {times.map(time => (
-        <RowOfWeek key={time} time={time} days={days} />
+        <RowOfWeek key={time.value} time={time.value} days={days} />
       ))}
     </div>
   );

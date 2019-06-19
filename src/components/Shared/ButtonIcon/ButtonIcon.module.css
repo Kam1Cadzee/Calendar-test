@@ -1,0 +1,23 @@
+.buttonIcon {
+    border: none;
+    background-color: transparent;
+    color: #00b8d4;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+}
+.buttonIcon:focus {
+    outline: none;
+}
+.buttonIcon:hover {
+    transition: background-color 300ms, color 300ms;
+    background-color: #00b8d4;
+    color: #ffffff;
+}
+.buttonIcon i {
+    font-size: 36px;
+}

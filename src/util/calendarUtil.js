@@ -1,8 +1,20 @@
 import dataCalendar from "../dataCalendar";
+import colors from "../colors";
+
+export const getDefaultColor = colors[0];
 export const getNameMonth = index => dataCalendar.months[index];
 export const getNameDayOfWeek = index => {
   return dataCalendar.weeks[index];
 };
+export const equalDates = (date, currentDate = new Date()) => {
+  return (
+    date.year === currentDate.getFullYear() &&
+    date.month === currentDate.getMonth() &&
+    date.date === currentDate.getDate()
+  );
+};
+export const equalMonth = (data, currentDate = new Date()) =>
+  data.month === currentDate.getMonth();
 
 export const convertToDate = ({ year, month, date }) => {
   return new Date(year, month, date);
@@ -57,13 +69,15 @@ export const getLocalDay = date => {
 
 export const getTimesOfDay = (time = "00:00") => {
   let times = [];
-  let [h, m] = time.split(":").map(t => +t);
+  let h = +time.split(":")[0];
   for (; h < 24; h += 1) {
     let hour = h;
     if (h < 10) hour = `0${h}`;
-    //for (; m < 60; m += 30) times.push(`${hour}:${m === 0 ? "00" : "30"}`);
-    times.push(`${hour}:00`);
-    m = 0;
+    const time = `${hour}:00`;
+    times.push({
+      label: time,
+      value: time
+    });
   }
   return times;
 };

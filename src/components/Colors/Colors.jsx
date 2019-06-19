@@ -1,20 +1,19 @@
 import React from "react";
 import css from "./Colors.module.css";
 import colors from "../../colors";
+import ColorItem from "./ColorItem/ColorItem";
 
 const Colors = ({ currentColor, changeColor }) => {
   return (
     <div className={css.colors}>
-      {colors.map(color => {
-        return (
-          <span
-            className={color === currentColor ? css.activeColor : css.color}
-            key={color}
-            style={{ backgroundColor: color }}
-            onClick={() => changeColor(color)}
-          />
-        );
-      })}
+      {colors.map(color => (
+        <ColorItem
+          key={color}
+          color={color}
+          changeColor={changeColor}
+          isActiveColor={color === currentColor}
+        />
+      ))}
     </div>
   );
 };

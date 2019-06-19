@@ -11,10 +11,37 @@
 
 .content {
     background-color: #fff;
-    width: 200px;
+    width: 280px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    box-shadow: 0 0 10px 2px rgba(0,0,0,.5);
+    padding: 20px;
+    box-shadow: 0 0 15px 3px rgba(0,0,0,.4);
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    color: #888888;
+}
+.date i {
+    color: #00b0ff;
+    margin-right: 10px;
+}
+
+.times {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.times i {
+    color: #00b0ff;
+}
+.controls {
+    display: flex;
+    justify-content: space-between;
+}
+.desc {
+    resize: vertical;
 }

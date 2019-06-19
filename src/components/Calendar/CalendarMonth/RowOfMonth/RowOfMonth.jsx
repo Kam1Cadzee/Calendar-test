@@ -1,14 +1,7 @@
 import React from "react";
-import css from "./RowOfMonth.module.css";
 import DayOfMonth from "../container/DayOfMonthContainer";
 
-const RowOfMonth = ({
-  week,
-  setCurrentDate,
-  deleteEvent,
-  changeEvent,
-  eventDate
-}) => {
+const RowOfMonth = ({ week }) => {
   return (
     <>
       {week.map((date, index) => (

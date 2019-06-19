@@ -2,78 +2,79 @@ import React from "react";
 import css from "./Event.module.css";
 import Modal from "../../Modal/Modal";
 import ContextEventModal from "../../Modal/ContextEventModal/ContextEventModal";
-import AddEventModal from "../../Modal/AddEventModal/AddEventModal";
+import anim from "../../../animation/AnimOpacity.module.css";
+import { CSSTransition } from "react-transition-group";
 
+const getPositionModal = target => {
+  let { left, top, height } = target.getBoundingClientRect();
+  let nameY = "top";
+  const { innerWidth, innerHeight } = window;
+  if (innerWidth - left < 230) left = innerWidth - 240;
+  if (innerHeight - top < 180) {
+    nameY = "bottom";
+    top = innerHeight - top;
+  }
+
+  top = ((top + height + 10) * 100) / innerHeight;
+  left = (left * 100) / innerWidth;
+  const position = {
+    left: `${left}%`,
+    [nameY]: `${top}%`
+  };
+  return position;
+};
 class Event extends React.Component {
   state = {
     styleContextMenu: null,
-    isContextMenu: false,
-    isChangeMenu: false
+    isContextMenu: false
   };
 
   toggleContextMenu = () => {
     this.setState(state => ({ isContextMenu: !state.isContextMenu }));
   };
-  toggleChangeMenu = () => {
-    this.setState(state => ({ isChangeMenu: !state.isChangeMenu }));
-  };
   openContextModal = e => {
-    const { setCurrentDate } = this.props;
+    const { setEventDate } = this.props;
     e.preventDefault();
-    let { left, top, height } = e.target.getBoundingClientRect();
-    const { innerWidth, innerHeight } = window;
-    left = (left * 100) / innerWidth;
-    top = ((top + height) * 100) / innerHeight;
-    const position = {
-      left: `${left}%`,
-      top: `${top}%`
-    };
-    this.setState({ styleContextMenu: position });
+
+    this.setState({ styleContextMenu: getPositionModal(e.target) });
     this.toggleContextMenu();
-    setCurrentDate();
+    setEventDate();
   };
   openChangeMenu = e => {
-    const { setCurrentDate } = this.props;
+    const { openModal } = this.props;
     e.stopPropagation();
-    this.toggleChangeMenu();
-    setCurrentDate();
+    const { event } = this.props;
+    openModal(event);
   };
   render() {
-    const { event, deleteEvent, changeEvent, eventDate } = this.props;
-    const { styleContextMenu, isContextMenu, isChangeMenu } = this.state;
+    const { event } = this.props;
+    const { styleContextMenu, isContextMenu } = this.state;
     const style = { backgroundColor: event.get("color") };
 
     return (
       <>
-        <div
+        <p
           className={css.event}
           onContextMenu={this.openContextModal}
           onClick={this.openChangeMenu}
           style={style}
         >
           {event.get("name")}
-        </div>
-        {isContextMenu && (
+        </p>
+        <CSSTransition
+          in={isContextMenu}
+          timeout={300}
+          classNames={anim}
+          unmountOnExit
+        >
           <Modal>
             <ContextEventModal
-              deleteEvent={deleteEvent}
               id={event.get("id")}
               onClose={this.toggleContextMenu}
               style={styleContextMenu}
-              changeEvent={changeEvent}
             />
           </Modal>
-        )}
-        {isChangeMenu && (
-          <Modal>
-            <AddEventModal
-              event={event}
-              eventDate={eventDate}
-              onClose={this.toggleChangeMenu}
-              changeEvent={changeEvent}
-            />
-          </Modal>
-        )}
+        </CSSTransition>
       </>
     );
   }

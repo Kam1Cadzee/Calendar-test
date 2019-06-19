@@ -3,7 +3,7 @@ import css from "./Button.module.css";
 
 const Button = ({ type = "button", onClick = () => null, children }) => {
   return (
-    <button type={type} onClick={onClick}>
+    <button type={type} onClick={onClick} className={css.button}>
       {children}
     </button>
   );

@@ -1,9 +1,17 @@
 import React from "react";
 import css from "./AddEventModal.module.css";
-import { getNameMonth } from "../../../util/calendarUtil";
-import SelectTimes from "../../Shared/SelectTimes/SelectTimes";
+import {
+  getDefaultColor,
+  getNameMonth,
+  getTimesOfDay
+} from "../../../util/calendarUtil";
 import Colors from "../../Colors/Colors";
 import { Map } from "immutable";
+import Input from "../../Shared/Input/Input";
+import Select from "../../Shared/Select/Select";
+import Button from "../../Shared/Button/Button";
+import { addEvent, changeEvent } from "../../../redux/Calendar/calendarActions";
+import { connect } from "react-redux";
 
 class AddEventModal extends React.Component {
   constructor(props) {
@@ -14,9 +22,9 @@ class AddEventModal extends React.Component {
       id: event.get("id") || null,
       name: event.get("name") || "",
       startTime: event.get("startTime") || startTime || "00:00",
-      endTime: event.get("endTime") || "00:00",
+      endTime: event.get("endTime") || startTime || "00:00",
       description: event.get("description") || "",
-      color: event.get("color") || "blue"
+      color: event.get("color") || getDefaultColor
     };
   }
 
@@ -24,10 +32,26 @@ class AddEventModal extends React.Component {
 
   handleChange = e => {
     const { name, value } = e.target;
+    if (name === "startTime") {
+      this.setState(state => {
+        const { endTime } = state;
+        if (parseFloat(endTime) < parseFloat(value)) {
+          return {
+            startTime: value,
+            endTime: value
+          };
+        }
+      });
+    }
     this.setState({ [name]: value });
   };
   handleChangeColor = color => this.setState({ color });
-  handleAddEvent = () => {
+
+  handleSubmit = e => {
+    e.preventDefault();
+    if (this.state.name === "") {
+      return;
+    }
     const { addEvent, onClose, event, changeEvent } = this.props;
     if (event) changeEvent(event.get("id"), this.state);
     else addEvent(this.state);
@@ -50,40 +74,58 @@ class AddEventModal extends React.Component {
         onClick={this.closeModal}
         ref={this.backElement}
       >
-        <div className={css.content}>
-          <input
+        <form onSubmit={this.handleSubmit} className={css.content}>
+          <Input
             name="name"
             type="text"
             value={name}
             onChange={this.handleChange}
           />
-          <p>{`${eventDate.date} ${getNameMonth(eventDate.month)} ${
-            eventDate.year
-          }`}</p>
-          <SelectTimes
-            name="startTime"
-            value={startTime}
-            onChange={this.handleChange}
-          />
-          <SelectTimes
-            name="endTime"
-            value={endTime}
-            onChange={this.handleChange}
-            startTime={startTime}
-          />
+
+          <p className={css.date}>
+            <i className="material-icons">calendar_today</i>
+            {`${eventDate.date} ${getNameMonth(eventDate.month)} ${
+              eventDate.year
+            }`}
+          </p>
+          <div className={css.times}>
+            <i className="material-icons">timeline</i>
+            <Select
+              name="startTime"
+              value={startTime}
+              onChange={this.handleChange}
+              options={getTimesOfDay()}
+            />
+            <Select
+              name="endTime"
+              value={endTime}
+              onChange={this.handleChange}
+              options={getTimesOfDay(startTime)}
+            />
+          </div>
+
           <textarea
             name="description"
             value={description}
             onChange={this.handleChange}
+            className={css.desc}
           />
           <Colors currentColor={color} changeColor={this.handleChangeColor} />
-          <button onClick={this.handleAddEvent}>
-            {event ? "Save" : "Add"}
-          </button>
-          <button onClick={onClose}>Cancel</button>
-        </div>
+          <div className={css.controls}>
+            <Button type="submit">{event ? "Сохранить" : "Добавить"}</Button>
+            <Button onClick={onClose}>Назад</Button>
+          </div>
+        </form>
       </div>
     );
   }
 }
-export default AddEventModal;
+
+const mapDispatchToProps = {
+  addEvent,
+  changeEvent
+};
+export default connect(
+  null,
+  mapDispatchToProps
+)(AddEventModal);

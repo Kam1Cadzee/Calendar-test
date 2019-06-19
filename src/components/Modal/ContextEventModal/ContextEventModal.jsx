@@ -3,6 +3,11 @@ import css from "./ContextEventModal.module.css";
 import Colors from "../../Colors/Colors";
 import { getColorEventById } from "../../../redux/Calendar/calendarSelectors";
 import { connect } from "react-redux";
+import Button from "../../Shared/Button/Button";
+import {
+  changeEvent,
+  deleteEvent
+} from "../../../redux/Calendar/calendarActions";
 
 const ContextEventModal = ({
   deleteEvent,
@@ -35,9 +40,9 @@ const ContextEventModal = ({
       className={css.modal}
     >
       <div className={css.content} style={style}>
-        <button type="Button" onClick={handleDeleteEvent}>
-          delete
-        </button>
+        <Button type="Button" onClick={handleDeleteEvent}>
+          Удалить
+        </Button>
         <Colors currentColor={currentColor} changeColor={handleChangeColor} />
       </div>
     </div>
@@ -46,4 +51,11 @@ const ContextEventModal = ({
 const mapStateToProps = (state, props) => ({
   currentColor: getColorEventById(state, props.id)
 });
-export default connect(mapStateToProps)(ContextEventModal);
+const mapDispatchToProps = {
+  deleteEvent,
+  changeEvent
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ContextEventModal);

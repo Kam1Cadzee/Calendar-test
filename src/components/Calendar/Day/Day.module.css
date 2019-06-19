@@ -1,5 +1,10 @@
 .dayOfWeek {
     border-bottom: 1px solid #c7c7c7;
+    display: flex;
+    justify-content: flex-start;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    width: calc(((100vw - 57px) / 7));
 }
 .day {
     background-color: #fff;
@@ -14,15 +19,20 @@
     font-size: 12px;
     padding-top: 3px;
     padding-bottom: 3px;
-    background-color: #eee;
+    background-color: #e3f2fd;
 
 }
 .dayInFieldCurrentMonth {
-    background-color: #bbb;
+    background-color: #90caf9;
 }
 .dayInFieldActive {
-    background-color: #29b6f6;
+    background-color: #2962ff;
     color: #ffffff;
     font-weight: 700;
 
+}
+@media screen and (max-width: 450px) {
+    .dayOfWeek {
+        width: calc(((100vw - 30px) / 7));
+    }
 }

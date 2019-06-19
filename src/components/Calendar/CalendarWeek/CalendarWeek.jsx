@@ -4,12 +4,7 @@ import HeaderCalendarWeek from "./HeaderCalendarWeek/HeaderCalendarWeek";
 import ContentCalendarWeek from "./ContentCalendarWeek/ContentCalendarWeek";
 
 const CalendarWeek = ({
-  data, // числа нидели
-  setCurrentDate: setEventDate, // установить дату события
-  addEvent,
-  deleteEvent,
-  eventDate, //
-  changeEvent
+  data // числа нидели
 }) => {
   return (
     <div className={css.container}>

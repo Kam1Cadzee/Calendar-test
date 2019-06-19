@@ -9,9 +9,9 @@ import { TYPE_DISPLAY } from "../../util/calendarUtil";
 
 const options = [
   { label: "Месяц", value: TYPE_DISPLAY.MONTH },
-  { label: "Неделя", value: TYPE_DISPLAY.WEEK },
-  { label: "День", value: TYPE_DISPLAY.DAY }
+  { label: "Неделя", value: TYPE_DISPLAY.WEEK }
 ];
+
 class SelectContainer extends React.Component {
   handleChangeValue = ({ target }) => {
     const { setTypeDisplay, history } = this.props;
@@ -19,12 +19,13 @@ class SelectContainer extends React.Component {
     history.push(`/${target.value}`);
   };
   render() {
-    const { typeDisplay } = this.props;
+    const { typeDisplay, style } = this.props;
     return (
       <Select
         options={options}
         value={typeDisplay}
         onChange={this.handleChangeValue}
+        style={style}
       />
     );
   }

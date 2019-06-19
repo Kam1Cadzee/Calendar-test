@@ -1,0 +1,20 @@
+.button {
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 5px 20px;
+    color: #00b8d4;
+    font-weight: 300;
+    font-size: 22px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border: 1px solid #00b8d4;
+}
+.button:focus {
+    outline: none;
+}
+.button:hover {
+    transition: background-color 300ms, color 300ms;
+    background-color: #00b8d4;
+    color: #ffffff;
+
+}

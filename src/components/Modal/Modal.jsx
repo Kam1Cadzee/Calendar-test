@@ -15,7 +15,7 @@ class Modal extends React.Component {
     modalRoot.removeChild(this.el);
   }
   render() {
-    return ReactDOM.createPortal(this.props.children, this.el);
+    return ReactDOM.createPortal(this.props.children, modalRoot);
   }
 }
 

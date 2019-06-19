@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./components/container/HeaderContainer";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import CalendarContainer from "./components/container/CalendarContainer";
 
 class App extends React.Component {
@@ -8,7 +8,10 @@ class App extends React.Component {
     return (
       <div>
         <Header />
-        <Route exact path="/:format" component={CalendarContainer} />
+        <Switch>
+          <Route exact path="/:format" component={CalendarContainer} />
+          <Redirect to="/month" />
+        </Switch>
       </div>
     );
   }

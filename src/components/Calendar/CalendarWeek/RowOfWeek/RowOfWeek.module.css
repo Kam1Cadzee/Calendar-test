@@ -3,4 +3,14 @@
     text-align: right;
     transform: translateY(-12px);
     padding-right: 5px;
+
+}
+@media screen and (max-width: 450px) {
+    .time {
+        padding-right: 0;
+        text-align: left;
+        font-size: 12px;
+        transform: translateY(-18px);
+        box-sizing: border-box;
+    }
 }
