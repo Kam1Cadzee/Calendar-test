@@ -42,6 +42,7 @@ class Day extends React.Component {
       <>
         <div className={dayClass} onClick={() => this.handleOpenModal()}>
           {isShow && <p className={dateClass}>{date.date}</p>}
+
           <TransitionGroup component={null}>
             {events.map(event => (
               <CSSTransition
@@ -49,7 +50,11 @@ class Day extends React.Component {
                 timeout={300}
                 classNames={animOpacity}
               >
-                <Event event={event} openModal={this.handleOpenModal} />
+                <Event
+                  event={event}
+                  openModal={this.handleOpenModal}
+                  date={date}
+                />
               </CSSTransition>
             ))}
           </TransitionGroup>

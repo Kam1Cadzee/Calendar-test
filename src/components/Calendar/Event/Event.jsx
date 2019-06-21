@@ -33,12 +33,13 @@ class Event extends React.Component {
     this.setState(state => ({ isContextMenu: !state.isContextMenu }));
   };
   openContextModal = e => {
-    const { setEventDate } = this.props;
+    const { setEventDate, date } = this.props;
     e.preventDefault();
 
     this.setState({ styleContextMenu: getPositionModal(e.target) });
     this.toggleContextMenu();
-    setEventDate();
+    console.log();
+    setEventDate(date);
   };
   openChangeMenu = e => {
     const { openModal } = this.props;
